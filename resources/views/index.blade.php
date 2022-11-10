@@ -8,8 +8,8 @@
     <body>
         <!--コンテンツ-->
         <h1>ログイン</h1>
-        <form action="./top.html" method="post">
-            ログインID:<input><br>
+        <form action="./login" method="post">
+            email:<input><br>
             パスワード:<input type="password"><br>
             <button>ログインする</button>
         </form>
