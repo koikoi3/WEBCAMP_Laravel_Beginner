@@ -16,7 +16,23 @@ class TaskController extends Controller
      */
     public function list()
     {
-        return view('task.list');
+        // 一覧の取得
+        $list = TaskModel::where('user_id', Auth::id())
+                         ->orderBy('priority', 'DESC')
+                         ->orderBy('period')
+                         ->orderBy('created_at')
+                         ->get();
+/*
+$sql = TaskModel::where('user_id', Auth::id())
+                         ->orderBy('priority', 'DESC')
+                         ->orderBy('period')
+                         ->orderBy('created_at')
+                         ->toSql();
+//echo "<pre>\n"; var_dump($sql, $list); exit
+var_dump($sql);
+*/
+        //
+        return view('task.list', ['list' => $list]);
     }
     /**
      * タスクの新規登録
@@ -34,8 +50,8 @@ class TaskController extends Controller
         $datum['user_id'] = Auth::id();
         
         // テーブルへのINSERT
-        $r = TaskModel::create($datum);
-var_dump($r); exit;
+        try {
+            $r = TaskModel::create($datum);
     } catch(\Throwable $e) {
         // XXX 本当はログに書く等の処理をする。今回は一端「出力する」だけ
         echo $e->getMessage();
@@ -47,4 +63,5 @@ var_dump($r); exit;
     
     //
     return redirect('/task/list');
+  }
 }
