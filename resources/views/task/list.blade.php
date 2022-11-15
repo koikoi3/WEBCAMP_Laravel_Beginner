@@ -9,6 +9,15 @@
             @if (session('front.task_register_success') == true)
                 タスクを登録しました!!<br>
             @endif
+            @if (session('front.task_delete_success') == true)
+                タスクを削除しました!!<br>
+            @endif
+            @if (session('front.task_completed_success') ==true)
+                タスクを完了にしました!!<br>
+            @endif
+            @if (session('front.task_completed_failure') == true)
+                タスクの完了に失敗しました....<br>
+            @endif
             @if ($errors->any())
                 <div>
                 @foreach ($errors->all() as $error)
@@ -27,7 +36,7 @@
                 <button>タスクを登録する</button>
             </form>
         
-        <h1>タスクの一覧(未実装)</h1>
+        <h1>タスクの一覧</h1>
         <a href="./top.html">CSVダウンロード(未実装)</a><br>
         <table border="1">
         <tr>
@@ -41,7 +50,7 @@
             <td>{{ $task->getPriorityString() }}
             <td><a href="{{ route('detail', ['task_id' => $task->id]) }}">詳細閲覧</a>
             <td><a href="./edit.html">編集</a>
-            <td><form action="./top.html"><button>完了</button></form></a>
+            <td><form action="{{ route('complete', ['task_id' => $task->id]) }}" method="post"> @csrf <button onclick='return confirm("このタスクを「完了」にします。よろしいですか?");' >完了</button></form>
 @endforeach
         </table>
         <!--ページネーション-->
