@@ -49,7 +49,7 @@
             <td>{{ $task->period }}
             <td>{{ $task->getPriorityString() }}
             <td><a href="{{ route('detail', ['task_id' => $task->id]) }}">詳細閲覧</a>
-            <td><a href="./edit.html">編集</a>
+            <td><a href="{{ route('edit', ['task_id' => $task->id]) }}">編集</a>
             <td><form action="{{ route('complete', ['task_id' => $task->id]) }}" method="post"> @csrf <button onclick='return confirm("このタスクを「完了」にします。よろしいですか?");' >完了</button></form>
 @endforeach
         </table>
