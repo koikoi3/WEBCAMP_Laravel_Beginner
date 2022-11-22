@@ -10,8 +10,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\CompletedTask as CompletedTaskModel;
 
+//use Symfony\Component\HttpFoundation\StreamedResponse;
+
 class TaskController extends Controller
 {
+    /**
+     * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
+     */
+    protected function getListBuilder()
+    {
+        return TaskModel::where('user_id', Auth::id())
+                     ->orderBy('priority', 'DESC')
+                     ->orderBy('period')
+                     ->orderBy('created_at');
+    }
+    
     /**
      * タスク一覧ページ を表示する
      * 
@@ -35,18 +48,6 @@ var_dump($sql);
         //
         return view('task.list', ['list' => $list]);
     }
-    
-    /**
-     * 一覧用の Illuminate\Database\Eloquent\Builder インスタンスの取得
-     */
-    protected function getListBuilder()
-    {
-        return TaskModel::where('user_id', Auth::id())
-                     ->orderBy('priority', 'DESC')
-                     ->orderBy('period')
-                     ->orderBy('created_at');
-    }
-    
     
     /**
      * タスクの新規登録
