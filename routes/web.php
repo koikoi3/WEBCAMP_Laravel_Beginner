@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 use App\Http\Controllers\CompletedTaskController;
+use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,10 @@ use App\Http\Controllers\CompletedTaskController;
 // タスク管理システム
 Route::get('/', [AuthController::class, 'index'])->name('front.index');
 Route::post('/login', [AuthController::class, 'login']);
+
+// 登録画面
+Route::get('/user/register', [UserController::class, 'register']);
+Route::post('/user/register', [UserController::class, 'registered']);
 
 // 認可処理
 Route::middleware(['auth'])->group(function () {
@@ -41,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list']);
     //
     Route::get('/logout', [AuthController::class, 'logout']);
+
 });
 
 // 管理画面
