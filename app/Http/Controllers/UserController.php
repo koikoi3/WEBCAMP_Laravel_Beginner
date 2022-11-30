@@ -4,6 +4,8 @@ namespace APP\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use App\Models\User as UserModel;
 use App\Http\Requests\UserRegisterPost;
 use Laravel\Sanctum\HasApiTokens;
@@ -25,18 +27,33 @@ class UserController extends Controller
     {
         return view('/user/register');
     }
+    
+    
     /**
      * 会員登録処理
      * 
      */
-      public function register(UserRegisterPost $request)
+    public function register(UserRegisterPost $request)
     {
         // validat済
-
-        // データの取得
         $datum = $request->validated();
         
-        $datum['user_id'] = Auth::id();
+        return UserModel::create([
+            'name' => $datum['name'],
+            'email' => $datum['email'],
+            'password' => Hash::make($datum['password']),
+        ]);
+/*
+        // パスワード確認
+        $request->validate([
+            'password' => [
+                'comfirmed',
+                password_confirmation::required(),
+            ],
+        ]);
+        $datum = $request->validated();
+        
+        //$datum['user_id'] = Auth::id();
         
         $datum['password'] = Hash::make($datum['password']);
         //var_dump($datum); exit;
@@ -57,12 +74,15 @@ class UserController extends Controller
         echo $e->getMessage();
         exit;
     }
-    
-    // タスクの登録成功
+*/
+    // ユーザの登録成功
     $request->session()->flash('front.user_register_success', true);
     
     //
-    return redirect('/user/register');
+    //$request->session()->regenerate();
+    //return redirect()->intended('./login');
+    //
+    return view('./login');
    //}
         //
         //$request->session()->regenerate();

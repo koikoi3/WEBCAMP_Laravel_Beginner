@@ -19,9 +19,16 @@ class UserRegisterPost extends FormRequest
     public function rules()
     {
         return [
-            //'user_name' => ['required', 'max:128'],
+            'name' => ['required', 'max:128'],
             'email' => ['required', 'max:254'],
-            'password' => ['required', 'max:72'],
+            'password' => ['required', 'max:72', 'confirmed'],
+            'password_confirmation' => ['required', 'max:72'],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'password.confirmed' => 'パスワードが異なります',
         ];
     }
 }

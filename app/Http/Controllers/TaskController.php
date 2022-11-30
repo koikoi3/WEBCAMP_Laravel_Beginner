@@ -9,7 +9,7 @@ use App\Models\Task as TaskModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\CompletedTask as CompletedTaskModel;
-//use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserController;
 use App\Http\Requests\UserRegisterPost;
 
 use Symfony\Component\HttpFoundation\StreamedResponse;
