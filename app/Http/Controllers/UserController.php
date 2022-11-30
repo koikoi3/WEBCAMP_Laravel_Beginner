@@ -28,7 +28,19 @@ class UserController extends Controller
         return view('/user/register');
     }
     
+    public function __construct()
+    {
+        $this->middleware('guest');
+    }
     
+    public function validator(array $data)
+    {
+        return Validator::make($data,[
+            'name' => ['required', 'string', 'max:128'],
+            'email' => ['required', 'string', 'email', 'max:254'],
+            'password' => ['required', 'string', 'confirmed'],
+        ]);
+    }
     /**
      * 会員登録処理
      * 
@@ -43,29 +55,23 @@ class UserController extends Controller
             'email' => $datum['email'],
             'password' => Hash::make($datum['password']),
         ]);
+
 /*
-        // パスワード確認
-        $request->validate([
-            'password' => [
-                'comfirmed',
-                password_confirmation::required(),
-            ],
-        ]);
         $datum = $request->validated();
         
         //$datum['user_id'] = Auth::id();
         
         $datum['password'] = Hash::make($datum['password']);
         //var_dump($datum); exit;
-
-        // 認証
+*/
+/*        // 認証
         if (Auth::attempt($datum) === false) {
             return back()
                    ->withInput() // 入力値の保持
                    ->withErrors(['auth' => 'emailかパスワードに誤りがあります。',]) // エラーメッセージの出力
                    ;
         }
-
+*/
         // テーブルへのINSERT
         try {
             $r = UserModel::create($datum);
@@ -74,7 +80,7 @@ class UserController extends Controller
         echo $e->getMessage();
         exit;
     }
-*/
+
     // ユーザの登録成功
     $request->session()->flash('front.user_register_success', true);
     
@@ -82,7 +88,7 @@ class UserController extends Controller
     //$request->session()->regenerate();
     //return redirect()->intended('./login');
     //
-    return view('./login');
+    return redirect('/login');
    //}
         //
         //$request->session()->regenerate();
