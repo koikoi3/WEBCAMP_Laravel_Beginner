@@ -27,17 +27,6 @@ use App\Http\Controllers\UserController;
 Route::get('/', [AuthController::class, 'index'])->name('front.index');
 Route::post('/login', [AuthController::class, 'login']);
 
-// 登録画面
-Route::get('/', function() {
-    return view('index');
-});
-//Auth::routes();
-Route::get('/user/register', [UserController::class, 'index']);
-Route::post('/user/register', [UserController::class, 'register']);
-//Route::redirect('/user/register', 'index');
-//Route::get('/user/register', [UserController::class, 'login']);
-//Route::post('/user/register', [UserController::class, 'login']);
-
 // 認可処理
 Route::middleware(['auth'])->group(function () {
     Route::prefix('task')->group(function () {
@@ -68,7 +57,9 @@ Route::prefix('/admin')->group(function () {
     Route::get('/logout', [AdminAuthController::class, 'logout']);
 });
 
-
+// 登録画面
+Route::get('/user/register', [UserController::class, 'index']);
+Route::post('/user/register', [UserController::class, 'register']);
 
 // テスト用
 Route::get('/welcome', [WelcomeController::class, 'index']);
