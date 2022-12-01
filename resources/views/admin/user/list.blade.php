@@ -2,7 +2,8 @@
 
 {{-- メインコンテンツ --}}
 @section('contets')
-        <h1>ユーザー一覧</h1>
+        
+        <h1>ユーザ一覧</h1>
         <table border="1">
         <tr>
             <th>ユーザID

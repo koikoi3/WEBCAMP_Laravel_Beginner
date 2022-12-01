@@ -22,11 +22,10 @@ class TaskController extends Controller
     protected function getListBuilder()
     {
         return TaskModel::where('user_id', Auth::id())
-                     ->orderBy('priority', 'DESC')
-                     ->orderBy('period')
-                     ->orderBy('created_at');
+                    ->orderBy('priority', 'DESC')
+                    ->orderBy('period')
+                    ->orderBy('created_at');
     }
-    
     /**
      * タスク一覧ページ を表示する
      * 
@@ -38,9 +37,13 @@ class TaskController extends Controller
         $per_page = 20;
         
         // 一覧の取得
+        //$list = TaskModel::where('user_id', Auth::id())
+                        //->orderBy('priority', 'DESC')
+                        //->orderBy('period')
+                        //->orderBy('created_at');
+                        //->paginate($per_page);
         $list = $this->getListBuilder()
                      ->paginate($per_page);
-
 /*
 $sql = $this->getListBuilder()
             ->toSql();
@@ -69,18 +72,18 @@ var_dump($sql);
         // テーブルへのINSERT
         try {
             $r = TaskModel::create($datum);
-    } catch(\Throwable $e) {
-        // XXX 本当はログに書く等の処理をする。今回は一端「出力する」だけ
-        echo $e->getMessage();
-        exit;
+        } catch(\Throwable $e) {
+            // XXX 本当はログに書く等の処理をする。今回は一端「出力する」だけ
+            echo $e->getMessage();
+            exit;
+        }
+    
+        // タスクの登録成功
+        $request->session()->flash('front.task_register_success', true);
+    
+        //
+        return redirect('/task/list');
     }
-    
-    // タスクの登録成功
-    $request->session()->flash('front.task_register_success', true);
-    
-    //
-    return redirect('/task/list');
-  }
   
   /**
      * タスクの詳細閲覧
