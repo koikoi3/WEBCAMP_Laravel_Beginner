@@ -39,7 +39,7 @@
         <h1>タスクの一覧</h1>
         <a href="/task/csv/download">CSVダウンロード</a><br>
         <a href="/completed_tasks/list">完了タスク一覧</a><br>
-        <table border="1" cellpadding="0">
+        <table border="1">
         <tr>
             <th>タスク名
             <th>期限
@@ -52,7 +52,7 @@
             <td><a href="{{ route('detail', ['task_id' => $task->id]) }}">詳細閲覧</a>
             <td><a href="{{ route('edit', ['task_id' => $task->id]) }}">編集</a>
             <!--<td><form action="{{ route('complete', ['task_id' => $task->id]) }}" method="post">@csrf<button onclick='return confirm("このタスクを「完了」にします。よろしいですか?");' >完了</button></form>-->
-            <td><form style="margin: 0px;" action="{{ route('complete', ['task_id' => $task->id]) }}" method="post"> @csrf <button onclick='return confirm("このタスクを「完了」にします。よろしいですか?");' >完了</button></form>
+            <td><form style="margin: 0px;" action="{{ route('complete', ['task_id' => $task->id]) }}" method="post"> @csrf <button onclick='return confirm("このタスクを「完了」にします。よろしいですか?");' >完了</button></form></td>
 @endforeach
         </table>
         <!--ページネーション-->

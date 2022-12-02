@@ -27,6 +27,10 @@ use App\Http\Controllers\UserController;
 Route::get('/', [AuthController::class, 'index'])->name('front.index');
 Route::post('/login', [AuthController::class, 'login']);
 
+// 登録画面
+Route::get('/user/register', [UserController::class, 'index']);
+Route::post('/user/register', [UserController::class, 'register']);
+
 // 認可処理
 Route::middleware(['auth'])->group(function () {
     Route::prefix('task')->group(function () {
@@ -37,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/edit/{task_id}', [TaskController::class, 'editSave'])->whereNumber('task_id')->name('edit_save');
         Route::delete('/delete/{task_id}', [TaskController::class, 'delete'])->whereNumber('task_id')->name('delete');
         Route::post('/complete/{task_id}', [TaskController::class, 'complete'])->whereNumber('task_id')->name('complete');
-        Route::get('/csv/dowload', [TaskController::class, 'csvDownload']);
+        Route::get('/csv/download', [TaskController::class, 'csvDownload']);
     });
     // 完了タスクリスト
     Route::get('/completed_tasks/list', [CompletedTaskController::class, 'list']);
@@ -58,8 +62,8 @@ Route::prefix('/admin')->group(function () {
 });
 
 // 登録画面
-Route::get('/user/register', [UserController::class, 'index']);
-Route::post('/user/register', [UserController::class, 'register']);
+//Route::get('/user/register', [UserController::class, 'index']);
+//Route::post('/user/register', [UserController::class, 'register']);
 
 // テスト用
 Route::get('/welcome', [WelcomeController::class, 'index']);
